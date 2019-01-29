@@ -136,13 +136,11 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
         return weatherDataList.size();
     }
 
-//    public void removeItem(int position) {
-//        mWeatherData.(position);
-//        // notify the item removed by position
-//        // to perform recycler view delete animations
-//        // NOTE: don't call notifyDataSetChanged()
-//        notifyItemRemoved(position);
-//    }
+    public void removeItem(int position) {
+        weatherDataList.remove(position);
+        // notify the item removed by position
+        notifyItemRemoved(position);
+    }
 
     /**
      * This method is used to set the weather forecast on a ForecastAdapter if we've already
