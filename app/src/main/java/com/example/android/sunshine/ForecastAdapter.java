@@ -79,8 +79,11 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
 
     @Override
     public int getItemCount() {
-
-        return weatherDataList.size();
+        if (weatherDataList == null) {
+            return 0;
+        } else {
+            return weatherDataList.size();
+        }
     }
 
     public boolean onItemMove(int fromPosition, int toPosition) {
