@@ -23,19 +23,26 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * {@link ForecastAdapter} exposes a list of weather forecasts to a
  * {@link android.support.v7.widget.RecyclerView}
  */
 public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ForecastAdapterViewHolder> {
 
-    private String[] mWeatherData;
+//    private String[] mWeatherData;
+    List<String> weatherDataList = new ArrayList<String>();
 
     /*
      * An on-click handler that we've defined to make it easy for an Activity to interface with
      * our RecyclerView
      */
     final private ForecastAdapterOnClickHandler mClickHandler;
+
+
 
     /**
      * The interface that receives onClick messages.
@@ -74,7 +81,7 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
         @Override
         public void onClick(View v) {
             int adapterPosition = getAdapterPosition();
-            String weatherForDay = mWeatherData[adapterPosition];
+            String weatherForDay = weatherDataList.get(adapterPosition);
             mClickHandler.onClick(weatherForDay);
         }
     }
@@ -113,7 +120,7 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
      */
     @Override
     public void onBindViewHolder(ForecastAdapterViewHolder forecastAdapterViewHolder, int position) {
-        String weatherForThisDay = mWeatherData[position];
+        String weatherForThisDay = weatherDataList.get(position);
         forecastAdapterViewHolder.mWeatherTextView.setText(weatherForThisDay);
     }
 
@@ -125,9 +132,17 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
      */
     @Override
     public int getItemCount() {
-        if (null == mWeatherData) return 0;
-        return mWeatherData.length;
+        if (weatherDataList.isEmpty()) return 0;
+        return weatherDataList.size();
     }
+
+//    public void removeItem(int position) {
+//        mWeatherData.(position);
+//        // notify the item removed by position
+//        // to perform recycler view delete animations
+//        // NOTE: don't call notifyDataSetChanged()
+//        notifyItemRemoved(position);
+//    }
 
     /**
      * This method is used to set the weather forecast on a ForecastAdapter if we've already
@@ -136,8 +151,8 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
      *
      * @param weatherData The new weather data to be displayed.
      */
-    public void setWeatherData(String[] weatherData) {
-        mWeatherData = weatherData;
+    public void setWeatherData(List<String> weatherData) {
+        weatherDataList = weatherData;
         notifyDataSetChanged();
     }
 }
