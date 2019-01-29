@@ -48,6 +48,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import static android.support.v7.widget.helper.ItemTouchHelper.ACTION_STATE_DRAG;
+
 public class MainActivity extends AppCompatActivity implements
         ForecastAdapter.ForecastAdapterOnClickHandler,
         LoaderCallbacks<String[]>,
@@ -107,6 +109,7 @@ public class MainActivity extends AppCompatActivity implements
         PreferenceManager.getDefaultSharedPreferences(this)
                 .registerOnSharedPreferenceChangeListener(this);
 
+
         ItemTouchHelper swipeCallback = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
 
             @Override
@@ -114,17 +117,17 @@ public class MainActivity extends AppCompatActivity implements
                 return mForecastAdapter.onItemMove(dragged.getAdapterPosition(), target.getAdapterPosition());
             }
 
-//            @Override
-//            public void onSelectedChanged(@Nullable RecyclerView.ViewHolder viewHolder, int actionState) {
-//                super.onSelectedChanged(viewHolder, actionState);
-//                viewHolder.itemView.setAlpha(0.7f);
-//            }
-//
-//            @Override
-//            public void clearView(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
-//                super.clearView(recyclerView, viewHolder);
-//                viewHolder.itemView.setAlpha(1.0f);
-//            }
+            @Override
+            public void onSelectedChanged(@Nullable RecyclerView.ViewHolder viewHolder, int actionState) {
+                actionState = ItemTouchHelper.ACTION_STATE_DRAG;
+
+                super.onSelectedChanged(viewHolder, actionState);
+            }
+
+            @Override
+            public void clearView(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
+                super.clearView(recyclerView, viewHolder);
+            }
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
